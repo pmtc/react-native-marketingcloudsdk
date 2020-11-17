@@ -128,4 +128,16 @@ RCT_EXPORT_METHOD(logSdkState) {
     [self splitLog:[[MarketingCloudSDK sharedInstance] sfmc_getSDKState]];
 }
 
+RCT_EXPORT_METHOD(startWatchingLocation) {
+  [[MarketingCloudSDK sharedInstance] sfmc_startWatchingLocation];
+}
+
+RCT_EXPORT_METHOD(stopWatchingLocation) {
+  [[MarketingCloudSDK sharedInstance] sfmc_stopWatchingLocation];
+}
+
+RCT_EXPORT_METHOD(isWatchingLocation:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+    resolve(@([[MarketingCloudSDK sharedInstance] sfmc_watchingLocation]));
+}
+
 @end
