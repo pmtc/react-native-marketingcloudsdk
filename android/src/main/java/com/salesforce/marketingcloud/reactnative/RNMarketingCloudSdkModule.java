@@ -211,6 +211,37 @@ public class RNMarketingCloudSdkModule extends ReactContextBaseJavaModule {
         });
     }
 
+    @ReactMethod
+    public void startWatchingLocation() {
+        handleAction(new Action() {
+            @Override
+            void execute(MarketingCloudSdk sdk) {
+                sdk.getRegionMessageManager().enableGeofenceMessaging();
+            }
+        });
+    }
+
+    @ReactMethod
+    public void stopWatchingLocation() {
+        handleAction(new Action() {
+            @Override
+            void execute(MarketingCloudSdk sdk) {
+                sdk.getRegionMessageManager().disableGeofenceMessaging();
+            }
+        });
+    }
+
+    @ReactMethod
+    public void isWatchingLocation(Promise promise) {
+        handleAction(new PromiseAction(promise) {
+            @Override
+            void execute(MarketingCloudSdk sdk, @NonNull Promise promise) {
+                promise.resolve(sdk.getRegionMessageManager().isGeofenceMessagingEnabled());
+            }
+        });
+    }
+
+
     private void handleAction(final Action action) {
         boolean initializing = MarketingCloudSdk.isInitializing();
         boolean ready = MarketingCloudSdk.isReady();
