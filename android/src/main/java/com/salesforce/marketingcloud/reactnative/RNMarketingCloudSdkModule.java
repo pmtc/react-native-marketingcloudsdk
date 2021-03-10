@@ -241,6 +241,45 @@ public class RNMarketingCloudSdkModule extends ReactContextBaseJavaModule {
         });
     }
 
+    @ReactMethod
+    public void getInboxMessages(Promise promise){
+        handleAction(new PromiseAction(promise) {
+            @Override
+            void execute(MarketingCloudSdk sdk, @NonNull Promise promise) {
+
+                WritableArray arrInboxMessages = new WritableNativeArray();
+                List<InboxMessage> list = sdk.getInboxMessageManager().getMessages();
+
+                for (InboxMessage objInbox: list) {
+                    WritableMap objMessage = new WritableNativeMap();
+
+                    objMessage.putString("id",objInbox.id());
+                    objMessage.putString("alert",objInbox.alert());
+                    objMessage.putBoolean("deleted",objInbox.deleted());
+                    objMessage.putString("endDateUtc",objInbox.endDateUtc().toString());
+                    objMessage.putBoolean("read",objInbox.read());
+                    objMessage.putString("sendDateUtc",objInbox.sendDateUtc().toString());
+                    objMessage.putString("sound",objInbox.sound());
+                    objMessage.putString("startDateUtc",objInbox.startDateUtc().toString());
+                    objMessage.putString("subject",objInbox.subject());
+                    objMessage.putString("title",objInbox.title());
+                    objMessage.putString("url",objInbox.url());
+
+                    Map<String, String> attributes = objInbox.customKeys();
+                    WritableMap writableMap = Arguments.createMap();
+                    if (!attributes.isEmpty()) {
+                        for (Map.Entry<String, String> entry : attributes.entrySet()) {
+                            writableMap.putString(entry.getKey(), entry.getValue());
+                        }
+                        objMessage.putMap("keys",writableMap);
+                    }
+                    arrInboxMessages.pushMap(objMessage);
+                }
+                promise.resolve(arrInboxMessages);
+            }
+        });
+    }
+
 
     private void handleAction(final Action action) {
         boolean initializing = MarketingCloudSdk.isInitializing();

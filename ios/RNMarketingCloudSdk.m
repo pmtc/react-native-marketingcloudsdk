@@ -140,4 +140,54 @@ RCT_EXPORT_METHOD(isWatchingLocation:(RCTPromiseResolveBlock)resolve rejecter:(R
     resolve(@([[MarketingCloudSDK sharedInstance] sfmc_watchingLocation]));
 }
 
+RCT_EXPORT_METHOD(getInboxMessages
+                  : (RCTPromiseResolveBlock)resolve rejecter
+                  : (RCTPromiseRejectBlock)reject) {
+
+    NSArray *arrMessages = [[MarketingCloudSDK sharedInstance] sfmc_getAllMessages];
+    NSMutableArray *arrTransformedMessages = [NSMutableArray new];
+
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"E MMM dd ',' yyyy 'at' hh:mm:ss a";
+
+    for (NSDictionary *objDic in arrMessages) {
+
+        NSMutableDictionary *dic = [NSMutableDictionary new];
+        [dic setDictionary:objDic];
+
+        if([[dic objectForKey:@"sendDateUtc"] isKindOfClass:[NSDate class]]) {
+            NSString *result = [dateFormatter stringFromDate:[dic objectForKey:@"sendDateUtc"]];
+            [dic setObject:result forKey:@"sendDateUtc"];
+        }
+
+        if([[dic objectForKey:@"endDateUtc"] isKindOfClass:[NSDate class]]) {
+            NSString *result = [dateFormatter stringFromDate:[dic objectForKey:@"endDateUtc"]];
+            [dic setObject:result forKey:@"endDateUtc"];
+        }
+
+        if([[dic objectForKey:@"startDateUtc"] isKindOfClass:[NSDate class]]) {
+            NSString *result = [dateFormatter stringFromDate:[dic objectForKey:@"startDateUtc"]];
+            [dic setObject:result forKey:@"startDateUtc"];
+        }
+
+        NSArray *keys = [dic objectForKey:@"keys"];
+        [dic removeObjectForKey:@"keys"];
+        NSMutableDictionary *dicForKeys = [NSMutableDictionary new];
+        for (NSDictionary *keyValue in keys) {
+            [dicForKeys setObject:[keyValue objectForKey:@"value"] forKey:[keyValue objectForKey:@"key"]];
+        }
+        if(dicForKeys.count) {
+            [dic setObject:dicForKeys forKey:@"keys"];
+        }
+        [arrTransformedMessages addObject:dic];
+    }
+       if(arrTransformedMessages.count > 0) {
+       resolve(arrTransformedMessages);
+       }
+       else {
+       resolve(@[]);
+       }
+}
+
+
 @end
