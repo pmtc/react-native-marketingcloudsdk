@@ -189,5 +189,10 @@ RCT_EXPORT_METHOD(getInboxMessages
        }
 }
 
+RCT_EXPORT_METHOD(refreshMessages
+                  : (RCTPromiseResolveBlock)resolve rejecter
+                  : (RCTPromiseRejectBlock)reject) {
+    resolve([[MarketingCloudSDK sharedInstance] sfmc_refreshMessages]);
+}
 
 @end

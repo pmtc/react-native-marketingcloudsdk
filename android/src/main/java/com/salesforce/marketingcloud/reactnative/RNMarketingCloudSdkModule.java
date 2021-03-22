@@ -42,6 +42,7 @@ import com.facebook.react.bridge.WritableNativeMap;
 import com.salesforce.marketingcloud.MCLogListener;
 import com.salesforce.marketingcloud.MarketingCloudSdk;
 import com.salesforce.marketingcloud.messages.inbox.InboxMessage;
+import com.salesforce.marketingcloud.messages.inbox.InboxMessageManager;
 
 import java.util.List;
 import java.util.Map;
@@ -284,6 +285,20 @@ public class RNMarketingCloudSdkModule extends ReactContextBaseJavaModule {
         });
     }
 
+    @ReactMethod
+    public void refreshMesssages(Promise promise) {
+        handleAction(new PromiseAction(promise) {
+            @Override
+            void execute(MarketingCloudSdk sdk, @NonNull final Promise promise) {
+                sdk.getInboxMessageManager().refreshInbox(new InboxMessageManager.InboxRefreshListener() {
+                    @Override
+                    public void onRefreshComplete(boolean b) {
+                        promise.resolve(b);
+                    }
+                });
+            }
+        });
+    }
 
     private void handleAction(final Action action) {
         boolean initializing = MarketingCloudSdk.isInitializing();
