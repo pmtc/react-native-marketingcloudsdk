@@ -286,7 +286,7 @@ public class RNMarketingCloudSdkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void refreshMesssages(Promise promise) {
+    public void refreshMessages(Promise promise) {
         handleAction(new PromiseAction(promise) {
             @Override
             void execute(MarketingCloudSdk sdk, @NonNull final Promise promise) {
