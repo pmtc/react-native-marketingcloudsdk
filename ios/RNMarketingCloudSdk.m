@@ -195,4 +195,37 @@ RCT_EXPORT_METHOD(refreshMessages
     resolve(@([[MarketingCloudSDK sharedInstance] sfmc_refreshMessages]));
 }
 
+
+RCT_EXPORT_METHOD(markAllMessagesRead
+                  : (RCTPromiseResolveBlock)resolve rejecter
+                  : (RCTPromiseRejectBlock)reject) {
+
+    BOOL status =[[MarketingCloudSDK sharedInstance] sfmc_markAllMessagesRead];
+    resolve(@(status));
+}
+
+RCT_EXPORT_METHOD(getMessageCount
+                  : (RCTPromiseResolveBlock)resolve rejecter
+                  : (RCTPromiseRejectBlock)reject) {
+
+    NSInteger totalCount = [[MarketingCloudSDK sharedInstance] sfmc_getAllMessagesCount];
+    resolve(@(totalCount));
+}
+
+RCT_EXPORT_METHOD(getReadMessageCount
+                  : (RCTPromiseResolveBlock)resolve rejecter
+                  : (RCTPromiseRejectBlock)reject) {
+
+    NSInteger totalCount = [[MarketingCloudSDK sharedInstance] sfmc_getReadMessagesCount];
+    resolve(@(totalCount));
+}
+
+RCT_EXPORT_METHOD(getUnreadMessageCount
+                  : (RCTPromiseResolveBlock)resolve rejecter
+                  : (RCTPromiseRejectBlock)reject) {
+
+    NSInteger totalCount = [[MarketingCloudSDK sharedInstance] sfmc_getUnreadMessagesCount];
+    resolve(@(totalCount));
+}
+
 @end

@@ -286,6 +286,48 @@ public class RNMarketingCloudSdkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void markAllMessagesRead(Promise promise) {
+        handleAction(new PromiseAction(promise) {
+            @Override
+            void execute(MarketingCloudSdk sdk, @NonNull Promise promise) {
+                sdk.getInboxMessageManager().markAllMessagesRead();
+                promise.resolve(true);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void getMessageCount(Promise promise) {
+        handleAction(new PromiseAction(promise) {
+            @Override
+            void execute(MarketingCloudSdk sdk, @NonNull Promise promise) {
+                promise.resolve(sdk.getInboxMessageManager().getMessageCount());
+            }
+        });
+    }
+
+    @ReactMethod
+    public void getReadMessageCount(Promise promise) {
+        handleAction(new PromiseAction(promise) {
+            @Override
+            void execute(MarketingCloudSdk sdk, @NonNull Promise promise) {
+                promise.resolve(sdk.getInboxMessageManager().getReadMessageCount());
+            }
+        });
+    }
+
+
+    @ReactMethod
+    public void getUnreadMessageCount(Promise promise) {
+        handleAction(new PromiseAction(promise) {
+            @Override
+            void execute(MarketingCloudSdk sdk, @NonNull Promise promise) {
+                promise.resolve(sdk.getInboxMessageManager().getUnreadMessageCount());
+            }
+        });
+    }
+
+    @ReactMethod
     public void refreshMessages(Promise promise) {
         handleAction(new PromiseAction(promise) {
             @Override
