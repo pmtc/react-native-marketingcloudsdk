@@ -148,23 +148,18 @@ RCT_EXPORT_METHOD(getInboxMessages
     NSMutableArray *arrTransformedMessages = [NSMutableArray new];
 
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"E MMM dd ',' yyyy 'at' hh:mm:ss a";
-
+    dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZ";
     for (NSDictionary *objDic in arrMessages) {
-
         NSMutableDictionary *dic = [NSMutableDictionary new];
         [dic setDictionary:objDic];
-
         if([[dic objectForKey:@"sendDateUtc"] isKindOfClass:[NSDate class]]) {
             NSString *result = [dateFormatter stringFromDate:[dic objectForKey:@"sendDateUtc"]];
             [dic setObject:result forKey:@"sendDateUtc"];
         }
-
         if([[dic objectForKey:@"endDateUtc"] isKindOfClass:[NSDate class]]) {
             NSString *result = [dateFormatter stringFromDate:[dic objectForKey:@"endDateUtc"]];
             [dic setObject:result forKey:@"endDateUtc"];
         }
-
         if([[dic objectForKey:@"startDateUtc"] isKindOfClass:[NSDate class]]) {
             NSString *result = [dateFormatter stringFromDate:[dic objectForKey:@"startDateUtc"]];
             [dic setObject:result forKey:@"startDateUtc"];
