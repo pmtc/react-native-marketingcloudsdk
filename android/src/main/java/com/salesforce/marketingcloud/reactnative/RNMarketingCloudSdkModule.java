@@ -261,11 +261,11 @@ public class RNMarketingCloudSdkModule extends ReactContextBaseJavaModule {
                     objMessage.putString("id",objInbox.id());
                     objMessage.putString("alert",objInbox.alert());
                     objMessage.putBoolean("deleted",objInbox.deleted());
-                    objMessage.putString("endDateUtc",objInbox.endDateUtc().toString());
+                    objMessage.putString("endDateUtc",objInbox.endDateUtc() != null ? objInbox.endDateUtc().toString(): "");
                     objMessage.putBoolean("read",objInbox.read());
-                    objMessage.putString("sendDateUtc",objInbox.sendDateUtc().toString());
+                    objMessage.putString("sendDateUtc",objInbox.sendDateUtc() != null ? objInbox.sendDateUtc().toString(): "");
                     objMessage.putString("sound",objInbox.sound());
-                    objMessage.putString("startDateUtc",objInbox.startDateUtc().toString());
+                    objMessage.putString("startDateUtc",objInbox.startDateUtc() != null ? objInbox.startDateUtc().toString(): "");
                     objMessage.putString("subject",objInbox.subject());
                     objMessage.putString("title",objInbox.title());
                     objMessage.putString("url",objInbox.url());
